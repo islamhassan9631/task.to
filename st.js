@@ -41,12 +41,16 @@ function showInfo() {
     let last = ``;
 
     for (let i = 0; i < Users.length; i++) {
+        let checked="checked"
+        if(Users[i].user_status == ""){
+            checked="on"
+        }
         last += `<tr>
    <td>${i}</td>
    <td>${Users[i].user_name}</td>
    <td>${Users[i].user_age}</td>
    
-   <td><input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked +${i}" onchange='editUser(${i})' >${Users[i].user_status} </td>
+   <td><input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked +${i}"  ${checked} onchange='editUser(${i})' >${Users[i].user_status} </td>
    
     
    <td><button  onclick='deleteUser(${i})' > delete </button></td>
@@ -71,24 +75,28 @@ function deleteUser(e) {
 
 // //// edit user status ////
 
-function editUser(e) {
+function editUser(i) {
 
-    Users[e].user_status
+    Users[i].user_status
 
-    if (Users[e].user_status == "") {
-        Users[e].user_status = "on"
-
-        localStorage.setItem('myUser', JSON.stringify(Users))
-
-        showInfo(e)
-
-    } else if (Users[e].user_status == "on") {
-        Users[e].user_status = ""
+    if (Users[i].user_status == "") {
+        Users[i].user_status = "on"
 
         localStorage.setItem('myUser', JSON.stringify(Users))
+        let sw=document.getElementById(`flexSwitchCheckChecked ${i}`)
 
         showInfo()
+
+    } else if (Users[i].user_status == "on") {
+        Users[i].user_status = ""
+
+        localStorage.setItem('myUser', JSON.stringify(Users))
+        let sw=document.getElementById(`flexSwitchCheckChecked ${i}`)
+
+        showInfo()
+        
     }
+    
 
 }
 
